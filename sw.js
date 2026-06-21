@@ -1,8 +1,11 @@
-const CACHE_NAME = "contech-v1";
+const CACHE_NAME = "contech-v2";
 
 const urlsToCache = [
   "./",
   "./index.html",
+  "./manifest.json",
+  "./icon-192.png",
+  "./icon-512.png",
   "./Shivam.jpg",
   "./building.jpg"
 ];
