@@ -1,0 +1,840 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#38bdf8">
+  <title>Contech Infrastructure | Quantity Surveying</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: #0f172a; color: #e2e8f0; line-height: 1.6; }
+    header { padding: 20px 10%; background: #1e293b; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+    header h1 { color: #38bdf8; font-size: 1.5rem; }
+    nav a { color: #e2e8f0; text-decoration: none; margin-left: 20px; font-weight: 500; }
+    nav a:hover { color: #38bdf8; }
+ .btn { display: inline-block; margin-top: 25px; padding: 14px 28px; background: #38bdf8; color: #0f172a; border-radius: 8px; text-decoration: none; font-weight: bold; transition: 0.3s; border: none; cursor: pointer; }
+ .btn:hover { background: #0ea5e9; transform: translateY(-2px); }
+ .btn-sm { padding: 8px 16px; margin: 5px 5px 0 0; font-size: 0.9rem; display: inline-block; width: auto; }
+    section { padding: 70px 10%; }
+    section h2 { font-size: 2rem; margin-bottom: 20px; color: #38bdf8; }
+ .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
+ .card { background: #1e293b; padding: 25px; border-radius: 12px; border: 1px solid #334155; }
+ .card h3 { color: #facc15; margin-bottom: 10px; }
+    ul { padding-left: 20px; }
+    ul li { margin-bottom: 8px; color: #cbd5e1; }
+    footer { text-align: center; padding: 25px; background: #1e293b; color: #94a3b8; margin-top: 40px; }
+    input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: #e2e8f0; font-size: 1rem; }
+    label { display: block; margin-top: 15px; color: #94a3b8; font-weight: 500; }
+    button { width: 100%; padding: 14px; margin-top: 20px; background: #38bdf8; color: #0f172a; border-radius: 8px; border: none; font-weight: bold; font-size: 1rem; cursor: pointer; }
+    button:hover { background: #0ea5e9; }
+ .result { background: #334155; padding: 15px; margin-top: 15px; border-radius: 8px; }
+ .small { font-size: 0.9rem; color: #94a3b8; }
+ .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #1e293b; }
+    table th, table td { border: 1px solid #334155; padding: 10px; text-align: left; }
+    table th { background: #334155; color: #facc15; }
+ .profile-pic { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 4px solid #38bdf8; box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3); }
+    @media (max-width: 768px) { header { flex-direction: column; gap: 10px; } nav { flex-wrap: wrap; justify-content: center; }.grid { grid-template-columns: 1fr; } }
+    @media print { header, nav, footer, button,.btn { display: none!important; } body { background: white; color: black; } section { padding: 20px; }.result, table { background: white; color: black; } table th { background: #f0f0f0; color: black; } }
+    .light-mode{
+  background:#f8fafc;
+  color:#111827;
+}
+
+.light-mode .card,
+.light-mode header,
+.light-mode footer,
+.light-mode table{
+  background:#ffffff;
+  color:#111827;
+}
+.ac-btn{
+  background:#dc2626;
+  color:white;
+  width:auto;
+  padding:10px 20px;
+  margin-top:10px;
+}
+
+.ac-btn:hover{
+  background:#b91c1c;
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Contech Infrastructure</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#estimate">Estimate</a>
+      <a href="#earthwork">Earthwork</a>
+      <a href="#steel">Steel</a>
+      <a href="#concrete">Concrete</a>
+      <a href="#plaster">Plaster</a>
+      <a href="#slab">Slab</a>
+      <a href="#beam">Beam</a>
+      <a href="#column">Column</a>
+      <a href="#brick">Brickwork</a>
+      <a href="#rate"> Rate Analysis</a>
+      <a href="#report">report</a>
+      <a href="#contact">Contact</a>
+        
+          <!--Tab to edit-->
+        
+    </nav>
+  </header>
+
+  <button onclick="toggleTheme()" class="btn-sm">🌙 Mode</button>
+
+  <section style="background: url('building.jpg') center/cover no-repeat; padding: 120px 20px; text-align: center; color: white;">
+    <div style="background: rgba(0,0,0,0.2); padding: 30px; border-radius: 10px; display: inline-block;">
+      <h2 style="font-size: 3rem; font-weight: 800; color: #ff7a00; text-shadow: 2px 2px 0px #1e293b, 4px 4px 0px #0f172a, 6px 6px 15px rgba(255, 122, 0, 0.4);">
+        Civil Engineering
+      </h2>
+      <p style="font-size: 1.3rem; color: #e2e8f0; margin-top: 10px;">Beginner</p>
+      <p style="color: #e2e8f0; font-size: 1.4rem;">Specializing in Quantity Surveying & Estimation</p>
+      <a href="#contact" class="btn">Hire Me</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <div style="text-align: center; margin-bottom: 30px;">
+      <img src="Shivam.jpg" alt="My Photo" class="profile-pic">
+    </div>
+    <p>I am a Civil Engineering student passionate about construction and quantity estimation. Currently learning quantity take-off, BOQ preparation, and rate analysis for infrastructure projects.</p>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Quantity Take-off</h3>
+        <ul>
+          <li>Earthwork, Concrete, Steel calculation</li>
+          <li>Reading drawings & BOQ preparation</li>
+          <li>AutoCAD & Excel for estimation</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Software</h3>
+        <ul>
+          <li>AutoCAD</li>
+          <li>MS Excel</li>
+          <li>STAAD Pro - Basic</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Core Knowledge</h3>
+        <ul>
+          <li>Rate Analysis</li>
+          <li>Site Measurement</li>
+          <li>CPWD/DSR Rates</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects & Practice</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Residential Building Estimation</h3>
+        <p>Prepared detailed quantity take-off and BOQ for G+1 residential building as college project.</p>
+      </div>
+      <div class="card">
+        <h3>Road Work Quantity</h3>
+        <p>Calculated earthwork and material quantity for 2km road stretch using standard methods.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="estimate">
+    <h2>Project Estimate Calculator</h2>
+    <label>Area in sq ft:</label>
+    <input type="number" id="area" placeholder="Enter area in sq ft" min="0">
+    <label>Rate per sq ft (₹):</label>
+    <input type="number" id="rateInput" placeholder="Enter rate per sq ft" min="0">
+    <button onclick="calculateEstimate()">Calculate Total Cost</button>
+    <button class="ac-btn" onclick="clearSection('estimate','result')">
+🗑 AC
+</button>
+    <h3>Total Cost: ₹<span id="result">0</span></h3>
+  </section>
+
+  <section id="earthwork">
+    <h2>Earthwork Volume Calculator</h2>
+    <label><b>Method:</b></label>
+    <select id="method">
+      <option value="mean">Mean Section Area Method</option>
+      <option value="mid">Mid Section Area Method</option>
+      <option value="prismoid">Prismoidal Formula</option>
+    </select>
+    <label><b>Section Type:</b></label>
+    <select id="sectionType">
+      <option value="manual">Manual Area Input</option>
+      <option value="trapezoid">Trapezoid Road Section</option>
+    </select>
+    <div id="manualInput">
+      <div class="grid">
+        <div><label>Area 1 (m²):</label><input type="number" id="a1" placeholder="12.5"></div>
+        <div><label>Area 2 (m²):</label><input type="number" id="a2" placeholder="18.3"></div>
+      </div>
+      <label id="midLabel" style="display:none;">Mid Area Am (m²):</label>
+      <input type="number" id="am" placeholder="15.4" style="display:none;">
+    </div>
+    <div id="trapezoidInput" style="display:none;">
+      <label>Base Width B (m):</label><input type="number" id="base" placeholder="7">
+      <div class="grid">
+        <div><label>Height H1 at Sec-1 (m):</label><input type="number" id="h1" placeholder="2"></div>
+        <div><label>Height H2 at Sec-2 (m):</label><input type="number" id="h2" placeholder="2.5"></div>
+      </div>
+      <div class="grid">
+        <div><label>Side Slope n1:</label><input type="number" id="s1" placeholder="1.5"></div>
+        <div><label>Side Slope n2:</label><input type="number" id="s2" placeholder="1.5"></div>
+      </div>
+    </div>
+    <label><b>Distance L (m):</b></label>
+    <input type="number" id="len" placeholder="30">
+    <button onclick="calculateEarthwork()">Calculate Volume</button>
+    <button class="ac-btn" onclick="clearSection('earthwork','earthworkResult')">
+🗑 AC
+</button>
+    
+    <h3>Volume: <span id="earthworkResult">0</span> m³</h3>
+  </section>
+
+  <section id="steel">
+    <h2>Steel Bar Bending Schedule Calculator</h2>
+    <label>Bar Diameter (mm):</label><input type="number" id="dia" placeholder="e.g. 12, 16, 20" min="0">
+    <label>Bar Length / Span (m):</label><input type="number" id="span" placeholder="e.g. 5" min="0">
+    <label>Type of Bar:</label>
+    <select id="barType">
+      <option value="straight">Straight Bar</option>
+      <option value="bent">Bent Up Bar</option>
+      <option value="stirrup">Stirrup/Rectangular Ring</option>
+    </select>
+    <div id="bentFields" style="display:none;">
+      <div class="grid">
+        <div><label>Bend Height (m):</label><input type="number" id="bendHeight" placeholder="0.3"></div>
+        <div><label>Bend Angle:</label><select id="bendAngle"><option value="45">45°</option><option value="60">60°</option></select></div>
+      </div>
+    </div>
+    <div id="stirrupFields" style="display:none;">
+      <div class="grid">
+        <div><label>Beam Width (m):</label><input type="number" id="bWidth" placeholder="0.3"></div>
+        <div><label>Beam Depth (m):</label><input type="number" id="bDepth" placeholder="0.5"></div>
+      </div>
+      <label>Cover on All Sides (m):</label><input type="number" id="cover" placeholder="0.025" value="0.025">
+    </div>
+    <label>Number of Bars:</label><input type="number" id="nos" placeholder="e.g. 4" min="1" value="1">
+    <button onclick="calculateSteel()">Calculate Steel</button>
+    <button class="ac-btn" onclick="clearSection('steel','steelResult')">
+🗑 AC
+</button>
+    <div class="result" id="steelResult">Result yahan dikhega</div>
+  </section>
+
+  <section id="concrete">
+    <h2>Concrete Mix Calculator</h2>
+    <label>Concrete Volume (m³):</label><input type="number" id="concVol" placeholder="e.g. 1" min="0">
+    <label>Concrete Grade:</label>
+    <select id="grade">
+      <option value="1:4:8">M5 - 1:4:8</option>
+      <option value="1:3:6">M7.5 - 1:3:6</option>
+      <option value="1:2:4">M15 - 1:2:4</option>
+      <option value="1:1.5:3">M20 - 1:1.5:3</option>
+      <option value="1:1:2">M25 - 1:1:2</option>
+    </select>
+    <label>Rate per m³ (₹):</label><input type="number" id="concRate" placeholder="e.g. 4500" min="0">
+    <button onclick="calculateConcrete()">Calculate Materials</button>
+    <button class="ac-btn"
+onclick="clearSection('concrete','concreteResult')">
+🗑 AC
+</button>
+    <div class="result" id="concreteResult">Result yahan dikhega</div>
+  </section>
+
+  <section id="plaster">
+    <h2>Plaster Material Calculator</h2>
+    <label>Plaster Area (m²):</label><input type="number" id="plasterArea" placeholder="e.g. 100" min="0">
+    <div class="grid">
+      <div><label>Thickness (mm):</label><input type="number" id="plasterThick" placeholder="12" value="12"></div>
+      <div><label>Mix Ratio:</label><select id="plasterMix"><option value="1:4">1:4</option><option value="1:5">1:5</option><option value="1:6">1:6</option></select></div>
+    </div>
+    <label>Rate per bag cement (₹):</label><input type="number" id="cementRate" placeholder="400" value="400">
+    <label>Rate per m³ sand (₹):</label><input type="number" id="sandRate" placeholder="1500" value="1500">
+    <button onclick="calculatePlaster()">Calculate Materials</button>
+    <button class="ac-btn"  onclick="clearSection('plaster','plasterResult')">
+🗑 AC
+</button>
+    <div class="result" id="plasterResult">Result yahan dikhega</div>
+  </section>
+
+  <section id="slab">
+    <h2>Slab Material Calculator</h2>
+    <div class="grid">
+      <div><label>Length (m):</label><input type="number" id="slabL" placeholder="5" min="0"></div>
+      <div><label>Width (m):</label><input type="number" id="slabW" placeholder="4" min="0"></div>
+    </div>
+    <div class="grid">
+      <div><label>Thickness (mm):</label><input type="number" id="slabT" placeholder="150" value="150"></div>
+      <div><label>Concrete Grade:</label><select id="slabGrade"><option value="1:1.5:3">M20 - 1:1.5:3</option><option value="1:1:2">M25 - 1:1:2</option></select></div>
+    </div>
+    <label>Steel % of Concrete Volume:</label><input type="number" id="steelPer" placeholder="1" value="1" step="0.1">
+    <label>Rate per kg steel (₹):</label><input type="number" id="steelRate" placeholder="65" value="65">
+    <button onclick="calculateSlab()">Calculate Materials</button>
+    <button class="ac-btn" onclick="clearSection('slab','slabResult')">
+🗑 AC
+</button>
+    <div class="result" id="slabResult">Result yahan dikhega</div>
+  </section>
+
+  <section id="beam">
+    <h2>Beam Material Calculator</h2>
+    <div class="grid">
+      <div><label>Beam Length (m):</label><input type="number" id="beamL" placeholder="5" min="0"></div>
+      <div><label>Beam Width (m):</label><input type="number" id="beamW" placeholder="0.3" min="0"></div>
+    </div>
+    <div class="grid">
+      <div><label>Beam Depth (m):</label><input type="number" id="beamD" placeholder="0.45" min="0"></div>
+      <div><label>Concrete Grade:</label><select id="beamGrade"><option value="1:1.5:3">M20 - 1:1.5:3</option><option value="1:1:2">M25 - 1:1:2</option></select></div>
+    </div>
+    <label>Steel % of Concrete Volume:</label><input type="number" id="beamSteelPer" placeholder="2" value="2" step="0.1">
+    <label>Rate per kg steel (₹):</label><input type="number" id="beamSteelRate" placeholder="65" value="65">
+    <button onclick="calculateBeam()">Calculate Materials</button><button class="ac-btn" onclick="clearSection('beam','beamResult')">
+🗑 AC
+</button>
+    <div class="result" id="beamResult">Result yahan dikhega</div>
+  </section>
+
+  <section id="column">
+    <h2>Column Material Calculator</h2>
+    <div class="grid">
+      <div><label>Column Width (m):</label><input type="number" id="colW" placeholder="0.3" min="0"></div>
+      <div><label>Column Depth (m):</label><input type="number" id="colD" placeholder="0.3" min="0"></div>
+    </div>
+    <div class="grid">
+      <div><label>Column Height (m):</label><input type="number" id="colH" placeholder="3" min="0"></div>
+      <div><label>Concrete Grade:</label><select id="colGrade"><option value="1:1.5:3">M20 - 1:1.5:3</option><option value="1:1:2">M25 - 1:1:2</option></select></div>
+    </div>
+    <label>Steel % of Concrete Volume:</label><input type="number" id="colSteelPer" placeholder="2.5" value="2.5" step="0.1">
+    <label>Rate per kg steel (₹):</label><input type="number" id="colSteelRate" placeholder="65" value="65">
+    <button onclick="calculateColumn()">Calculate Materials</button>
+    <button class="ac-btn" onclick="clearSection('column','colResult')">
+🗑 AC
+</button>
+    <div class="result" id="colResult">Result yahan dikhega</div>
+  </section>
+
+  <section id="brick">
+    <h2>Brickwork Calculator</h2>
+    <div class="grid">
+      <div><label>Wall Length (m):</label><input type="number" id="wallL" placeholder="10" min="0"></div>
+      <div><label>Wall Height (m):</label><input type="number" id="wallH" placeholder="3" min="0"></div>
+    </div>
+    <div class="grid">
+      <div><label>Wall Thickness (mm):</label><input type="number" id="wallT" placeholder="230" value="230"></div>
+      <div><label>Mortar Mix:</label><select id="brickMix"><option value="1:4">1:4</option><option value="1:5">1:5</option><option value="1:6">1:6</option></select></div>
+    </div>
+    <label>Brick Size (mm):</label><select id="brickSize"><option value="190x90x90">Standard 190x90x90</option><option value="230x110x70">Modular 230x110x70</option></select>
+    <div class="grid">
+      <div><label>Rate per 1000 bricks (₹):</label><input type="number" id="brickRate" placeholder="8000" value="8000"></div>
+      <div><label>Rate per m³ mortar (₹):</label><input type="number" id="mortarRate" placeholder="3500" value="3500"></div>
+    </div>
+    <button onclick="calculateBrick()">Calculate Bricks & Mortar</button>
+    <button class="ac-btn" onclick="clearSection('brick','brickResult')">
+🗑 AC
+</button>
+    <div class="result" id="brickResult">Result yahan dikhega</div>
+  </section>
+
+  <section id="rate">
+    <h2>Rate Analysis - 1m³ Concrete M20</h2>
+    <div class="grid">
+      <div><label>Cement Rate per bag (₹):</label><input type="number" id="raCementRate" placeholder="400" value="400"></div>
+      <div><label>Sand Rate per m³ (₹):</label><input type="number" id="raSandRate" placeholder="1500" value="1500"></div>
+    </div>
+    <div class="grid">
+      <div><label>Aggregate Rate per m³ (₹):</label><input type="number" id="raAggRate" placeholder="1800" value="1800"></div>
+      <div><label>Labour Cost per m³ (₹):</label><input type="number" id="raLabour" placeholder="800" value="800"></div>
+    </div>
+    <button onclick="calculateRateAnalysis()">Calculate Rate</button><button class="ac-btn" onclick="clearSection('rate','rateResult')">
+🗑 AC
+</button>
+    <div class="result" id="rateResult">Result yahan dikhega</div>
+  </section>
+
+  <section id="report">
+    <h2>Material Cost Estimate Report</h2>
+    <p class="small">Yahan sab calculators ka total material cost dikhega. Print, Excel ya PDF me export kar sakte ho.</p>
+    <div id="boqTable"></div>
+    <button class="btn-sm" onclick="printReport()">🖨️ Print</button>
+    <button class="btn-sm" onclick="exportExcel()">📊 Excel</button>
+    <button class="btn-sm" onclick="exportPDF()">📄 PDF Download</button>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
+      <a href="https://wa.me/918957461258" target="_blank" class="btn" style="background: #25D366; color: white; text-decoration: none;">
+        💬 WhatsApp Me
+      </a>
+      <a href="mailto:shivamaurya1782@gmail.com" class="btn" style="background: #EA4335; color: white; text-decoration: none;">
+        ✉️ Send Email
+      </a>
+    </div>
+    <p class="small" style="margin-top: 20px;">Click karke directly WhatsApp ya Email kar sakte ho.</p>
+  </section>
+
+  <footer>
+  <h3>Contech Infrastructure</h3>
+  <p>Quantity Surveying • Estimation • BOQ • Rate Analysis</p>
+  <p>© 2026 All Rights Reserved</p>
+</footer>
+
+  
+<script>
+let boqData = [];
+
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if(target) {
+        const offset = 80;
+        const top = target.offsetTop - offset;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  document.getElementById('sectionType').addEventListener('change', function(){
+    let secType = this.value;
+    document.getElementById('trapezoidInput').style.display = secType=='trapezoid'?'block':'none';
+    document.getElementById('manualInput').style.display = secType=='manual'?'block':'none';
+    document.getElementById('method').dispatchEvent(new Event('change'));
+  });
+  function toggleTheme(){
+  document.body.classList.toggle("light-mode");
+}
+
+
+  document.getElementById('method').addEventListener('change', function(){
+    let method = this.value;
+    let secType = document.getElementById('sectionType').value;
+    if(secType == 'manual'){
+      if(method == 'mid'){
+        document.getElementById('midLabel').style.display = 'block';
+        document.getElementById('am').style.display = 'block';
+        document.getElementById('a1').style.display = 'none';
+        document.getElementById('a2').style.display = 'none';
+      } else {
+        document.getElementById('midLabel').style.display = 'none';
+        document.getElementById('am').style.display = 'none';
+        document.getElementById('a1').style.display = 'block';
+        document.getElementById('a2').style.display = 'block';
+      }
+    }
+  });
+
+  document.getElementById('barType').addEventListener('change', function(){
+    document.getElementById('bentFields').style.display = this.value=='bent'?'block':'none';
+    document.getElementById('stirrupFields').style.display = this.value=='stirrup'?'block':'none';
+  });
+});
+
+function calculateEstimate(){
+  let area = document.getElementById("area").value;
+  let rate = document.getElementById("rateInput").value;
+  if(area === "" || rate === ""){ alert("Please enter both area and rate"); return; }
+  let total = area * rate;
+  document.getElementById("result").innerText = total.toLocaleString('en-IN');
+}
+
+function calcTrapezoid(B, H, n){ return (B * H) + (n * H * H); }
+
+function calculateEarthwork(){
+  let method = document.getElementById('method').value;
+  let secType = document.getElementById('sectionType').value;
+  let L = parseFloat(document.getElementById('len').value) || 0;
+  let A1, A2, Am, V;
+  if(secType == 'trapezoid'){
+    let B = parseFloat(document.getElementById('base').value) || 0;
+    let H1 = parseFloat(document.getElementById('h1').value) || 0;
+    let H2 = parseFloat(document.getElementById('h2').value) || 0;
+    let n1 = parseFloat(document.getElementById('s1').value) || 0;
+    let n2 = parseFloat(document.getElementById('s2').value) || 0;
+    A1 = calcTrapezoid(B, H1, n1);
+    A2 = calcTrapezoid(B, H2, n2);
+    Am = calcTrapezoid(B, (H1+H2)/2, (n1+n2)/2);
+  } else {
+    if(method == 'mean' || method == 'prismoid'){
+      A1 = parseFloat(document.getElementById('a1').value) || 0;
+      A2 = parseFloat(document.getElementById('a2').value) || 0;
+      Am = (A1 + A2)/2;
+    } else {
+      Am = parseFloat(document.getElementById('am').value) || 0;
+    }
+  }
+  if(method == 'mean') V = ((A1 + A2)/2) * L;
+  else if(method == 'mid') V = Am * L;
+  else if(method == 'prismoid') V = (L/6) * (A1 + A2 + 4*Am);
+  document.getElementById('earthworkResult').innerText = V.toFixed(2);
+}
+
+function weightPerMeter(dia){ return (dia * dia) / 162.2; }
+
+function calculateSteel(){
+  let dia = parseFloat(document.getElementById("dia").value);
+  let span = parseFloat(document.getElementById("span").value);
+  let type = document.getElementById("barType").value;
+  let nos = parseFloat(document.getElementById("nos").value) || 1;
+  if(!dia ||!span){ alert("Please enter diameter and length"); return; }
+  let cuttingLength = 0, deduction = 0;
+  let wpm = weightPerMeter(dia);
+  if(type == "straight"){ cuttingLength = span; }
+  if(type == "bent"){
+    let h = parseFloat(document.getElementById("bendHeight").value) || 0;
+    let angle = parseInt(document.getElementById("bendAngle").value);
+    if(angle == 45) deduction = 0.42 * h;
+    if(angle == 60) deduction = 0.3 * h;
+    cuttingLength = span + 2*h - 2*deduction;
+  }
+  if(type == "stirrup"){
+    let b = parseFloat(document.getElementById("bWidth").value) || 0;
+    let d = parseFloat(document.getElementById("bDepth").value) || 0;
+    let c = parseFloat(document.getElementById("cover").value) || 0.025;
+    let diaM = dia / 1000;
+    cuttingLength = 2 * ((b - 2*c) + (d - 2*c)) + (10 * diaM) * 2;
+  }
+  let totalLength = cuttingLength * nos;
+  let totalWeight = totalLength * wpm;
+  document.getElementById("steelResult").innerHTML = `
+    Cutting Length per Bar: <b>${cuttingLength.toFixed(3)} m</b><br>
+    Total Length for ${nos} bars: <b>${totalLength.toFixed(3)} m</b><br>
+    <h3 style="color:#facc15;">Total Weight: ${totalWeight.toFixed(2)} kg</h3>
+  `;
+  addToBOQ("Steel", `${totalWeight.toFixed(2)} kg`, "");
+}
+
+function calculateConcrete(){
+  let vol = parseFloat(document.getElementById("concVol").value) || 0;
+  let grade = document.getElementById("grade").value;
+  let rate = parseFloat(document.getElementById("concRate").value) || 0;
+  let ratio = grade.split(":");
+  let cement = parseInt(ratio[0]), sand = parseInt(ratio[1]), agg = parseInt(ratio[2]);
+  let sum = cement + sand + agg;
+  let dryVol = vol * 1.54;
+  let cementVol = (cement / sum) * dryVol;
+  let sandVol = (sand / sum) * dryVol;
+  let aggVol = (agg / sum) * dryVol;
+  let cementBags = cementVol / 0.035;
+  let cementKg = cementBags * 50;
+  let totalCost = vol * rate;
+  document.getElementById("concreteResult").innerHTML = `
+    <b>For ${vol} m³ of ${grade} concrete:</b><br>
+    Cement: <b>${cementBags.toFixed(1)} bags (${cementKg.toFixed(0)} kg)</b><br>
+    Sand: <b>${sandVol.toFixed(2)} m³</b><br>
+    Aggregate: <b>${aggVol.toFixed(2)} m³</b><br>
+    <h3 style="color:#facc15;">Total Cost: ₹${totalCost.toLocaleString('en-IN')}</h3>
+  `;
+  addToBOQ(`Concrete ${grade}`, `${vol} m³`, totalCost);
+}
+
+function calculatePlaster(){
+  let area = parseFloat(document.getElementById("plasterArea").value) || 0;
+  let thick = parseFloat(document.getElementById("plasterThick").value) || 0;
+  let mix = document.getElementById("plasterMix").value;
+  let cementRate = parseFloat(document.getElementById("cementRate").value) || 400;
+  let sandRate = parseFloat(document.getElementById("sandRate").value) || 1500;
+  if(area <= 0 || thick <= 0){ alert("Please enter valid Area and Thickness"); return; }
+  let wetVolume = area * (thick / 1000);
+  let dryVolume = wetVolume * 1.35;
+  let ratio = mix.split(":");
+  let cementPart = parseInt(ratio[0]);
+  let sandPart = parseInt(ratio[1]);
+  let totalParts = cementPart + sandPart;
+  let cementVol = (cementPart / totalParts) * dryVolume;
+  let sandVol = (sandPart / totalParts) * dryVolume;
+  let cementBags = cementVol / 0.035;
+  let cementKg = cementBags * 50;
+  let cementCost = cementBags * cementRate;
+  let sandCost = sandVol * sandRate;
+  let totalCost = cementCost + sandCost;
+  document.getElementById("plasterResult").innerHTML = `
+    <b>For ${area} m² plaster, ${thick}mm thick, Mix ${mix}:</b><br>
+    Wet Volume: <b>${wetVolume.toFixed(3)} m³</b><br>
+    Dry Volume: <b>${dryVolume.toFixed(3)} m³</b><br>
+    Cement: <b>${cementBags.toFixed(1)} bags (${cementKg.toFixed(0)} kg)</b><br>
+    Sand: <b>${sandVol.toFixed(2)} m³</b><br>
+    <hr style="border-color:#334155; margin:10px 0;">
+    Cement Cost: ₹${cementCost.toLocaleString('en-IN')}<br>
+    Sand Cost: ₹${sandCost.toLocaleString('en-IN')}<br>
+    <h3 style="color:#facc15;">Total Material Cost: ₹${totalCost.toLocaleString('en-IN')}</h3>
+  `;
+  addToBOQ(`Plaster ${mix} ${thick}mm`, `${area} m²`, totalCost);
+}
+
+function calculateSlab(){
+  let L = parseFloat(document.getElementById("slabL").value) || 0;
+  let W = parseFloat(document.getElementById("slabW").value) || 0;
+  let T = parseFloat(document.getElementById("slabT").value) || 0;
+  let grade = document.getElementById("slabGrade").value;
+  let steelPer = parseFloat(document.getElementById("steelPer").value) || 1;
+  let steelRate = parseFloat(document.getElementById("steelRate").value) || 65;
+  if(L <= 0 || W <= 0 || T <= 0){ alert("Enter valid dimensions"); return; }
+  let vol = L * W * (T/1000);
+  let ratio = grade.split(":");
+  let sum = parseInt(ratio[0]) + parseInt(ratio[1]) + parseInt(ratio[2]);
+  let dryVol = vol * 1.54;
+  let cementVol = (parseInt(ratio[0]) / sum) * dryVol;
+  let sandVol = (parseInt(ratio[1]) / sum) * dryVol;
+  let aggVol = (parseInt(ratio[2]) / sum) * dryVol;
+  let cementBags = cementVol / 0.035;
+  let steelKg = vol * (steelPer/100) * 7850;
+  let steelCost = steelKg * steelRate;
+  document.getElementById("slabResult").innerHTML = `
+    Concrete Volume: <b>${vol.toFixed(3)} m³</b><br>
+    Cement: <b>${cementBags.toFixed(1)} bags</b><br>
+    Sand: <b>${sandVol.toFixed(2)} m³</b><br>
+    Aggregate: <b>${aggVol.toFixed(2)} m³</b><br>
+    Steel: <b>${steelKg.toFixed(2)} kg</b><br>
+    <h3 style="color:#facc15;">Steel Cost: ₹${steelCost.toLocaleString('en-IN')}</h3>
+  `;
+  addToBOQ(`Slab ${grade}`, `${vol.toFixed(3)} m³`, steelCost);
+}
+
+function calculateBeam(){
+  let L = parseFloat(document.getElementById("beamL").value) || 0;
+  let W = parseFloat(document.getElementById("beamW").value) || 0;
+  let D = parseFloat(document.getElementById("beamD").value) || 0;
+  let grade = document.getElementById("beamGrade").value;
+  let steelPer = parseFloat(document.getElementById("beamSteelPer").value) || 2;
+  let steelRate = parseFloat(document.getElementById("beamSteelRate").value) || 65;
+  if(L <= 0 || W <= 0 || D <= 0){ alert("Enter valid dimensions"); return; }
+  let vol = L * W * D;
+  let ratio = grade.split(":");
+  let sum = parseInt(ratio[0]) + parseInt(ratio[1]) + parseInt(ratio[2]);
+  let dryVol = vol * 1.54;
+  let cementVol = (parseInt(ratio[0]) / sum) * dryVol;
+  let sandVol = (parseInt(ratio[1]) / sum) * dryVol;
+  let aggVol = (parseInt(ratio[2]) / sum) * dryVol;
+  let cementBags = cementVol / 0.035;
+  let steelKg = vol * (steelPer/100) * 7850;
+  let steelCost = steelKg * steelRate;
+  document.getElementById("beamResult").innerHTML = `
+    Concrete Volume: <b>${vol.toFixed(3)} m³</b><br>
+    Cement: <b>${cementBags.toFixed(1)} bags</b><br>
+    Sand: <b>${sandVol.toFixed(2)} m³</b><br>
+    Aggregate: <b>${aggVol.toFixed(2)} m³</b><br>
+    Steel: <b>${steelKg.toFixed(2)} kg</b><br>
+    <h3 style="color:#facc15;">Steel Cost: ₹${steelCost.toLocaleString('en-IN')}</h3>
+  `;
+  addToBOQ(`Beam ${grade}`, `${vol.toFixed(3)} m³`, steelCost);
+}
+
+function calculateColumn(){
+  let W = parseFloat(document.getElementById("colW").value) || 0;
+  let D = parseFloat(document.getElementById("colD").value) || 0;
+  let H = parseFloat(document.getElementById("colH").value) || 0;
+  let grade = document.getElementById("colGrade").value;
+  let steelPer = parseFloat(document.getElementById("colSteelPer").value) || 2.5;
+  let steelRate = parseFloat(document.getElementById("colSteelRate").value) || 65;
+  if(W <= 0 || D <= 0 || H <= 0){ alert("Enter valid dimensions"); return; }
+  let vol = W * D * H;
+  let ratio = grade.split(":");
+  let sum = parseInt(ratio[0]) + parseInt(ratio[1]) + parseInt(ratio[2]);
+  let dryVol = vol * 1.54;
+  let cementVol = (parseInt(ratio[0]) / sum) * dryVol;
+  let sandVol = (parseInt(ratio[1]) / sum) * dryVol;
+  let aggVol = (parseInt(ratio[2]) / sum) * dryVol;
+  let cementBags = cementVol / 0.035;
+  let steelKg = vol * (steelPer/100) * 7850;
+  let steelCost = steelKg * steelRate;
+  document.getElementById("colResult").innerHTML = `
+    Concrete Volume: <b>${vol.toFixed(3)} m³</b><br>
+    Cement: <b>${cementBags.toFixed(1)} bags</b><br>
+    Sand: <b>${sandVol.toFixed(2)} m³</b><br>
+    Aggregate: <b>${aggVol.toFixed(2)} m³</b><br>
+    Steel: <b>${steelKg.toFixed(2)} kg</b><br>
+    <h3 style="color:#facc15;">Steel Cost: ₹${steelCost.toLocaleString('en-IN')}</h3>
+  `;
+  addToBOQ(`Column ${grade}`, `${vol.toFixed(3)} m³`, steelCost);
+}
+
+function calculateBrick(){
+  let L = parseFloat(document.getElementById("wallL").value) || 0;
+  let H = parseFloat(document.getElementById("wallH").value) || 0;
+  let T = parseFloat(document.getElementById("wallT").value) || 0;
+  let mix = document.getElementById("brickMix").value;
+  let size = document.getElementById("brickSize").value;
+  let brickRate = parseFloat(document.getElementById("brickRate").value) || 0;
+  let mortarRate = parseFloat(document.getElementById("mortarRate").value) || 0;
+  if(L <= 0 || H <= 0 || T <= 0){ alert("Enter valid dimensions"); return; }
+  let wallVol = L * H * (T/1000);
+  let brickVol = size == "190x90x90"? 0.19*0.09*0.09 : 0.23*0.11*0.07;
+  let mortarVolPerBrick = 0.01 * 0.01 * (T/1000);
+  let totalBricks = Math.ceil(wallVol / (brickVol + mortarVolPerBrick));
+  let mortarVol = wallVol * 0.25;
+  let dryMortar = mortarVol * 1.35;
+  let ratio = mix.split(":");
+  let cementPart = parseInt(ratio[0]);
+  let sandPart = parseInt(ratio[1]);
+  let sum = cementPart + sandPart;
+  let cementVol = (cementPart / sum) * dryMortar;
+  let sandVol = (sandPart / sum) * dryMortar;
+  let cementBags = cementVol / 0.035;
+  let brickCost = (totalBricks / 1000) * brickRate;
+  let mortarCost = mortarVol * mortarRate;
+  let totalCost = brickCost + mortarCost;
+  document.getElementById("brickResult").innerHTML = `
+    Wall Volume: <b>${wallVol.toFixed(2)} m³</b><br>
+    Bricks Required: <b>${totalBricks.toLocaleString('en-IN')} nos</b><br>
+    Cement: <b>${cementBags.toFixed(1)} bags</b><br>
+    Sand: <b>${sandVol.toFixed(2)} m³</b><br>
+    <h3 style="color:#facc15;">Total Cost: ₹${totalCost.toLocaleString('en-IN')}</h3>
+  `;
+  addToBOQ(`Brickwork ${T}mm`, `${wallVol.toFixed(2)} m³`, totalCost);
+}
+
+function calculateRateAnalysis(){
+  let cementRate = parseFloat(document.getElementById("raCementRate").value) || 400;
+  let sandRate = parseFloat(document.getElementById("raSandRate").value) || 1500;
+  let aggRate = parseFloat(document.getElementById("raAggRate").value) || 1800;
+  let labour = parseFloat(document.getElementById("raLabour").value) || 800;
+  let ratio = [1, 1.5, 3];
+  let sum = 1 + 1.5 + 3;
+  let dryVol = 1.54;
+  let cementVol = (1 / sum) * dryVol;
+  let sandVol = (1.5 / sum) * dryVol;
+  let aggVol = (3 / sum) * dryVol;
+  let cementBags = cementVol / 0.035;
+  let cementCost = cementBags * cementRate;
+  let sandCost = sandVol * sandRate;
+  let aggCost = aggVol * aggRate;
+  let materialCost = cementCost + sandCost + aggCost;
+  let totalCost = materialCost + labour;
+  document.getElementById("rateResult").innerHTML = `
+    <b>Rate Analysis for 1m³ M20 Concrete 1:1.5:3:</b><br>
+    Cement: ${cementBags.toFixed(2)} bags × ₹${cementRate} = ₹${cementCost.toFixed(0)}<br>
+    Sand: ${sandVol.toFixed(2)} m³ × ₹${sandRate} = ₹${sandCost.toFixed(0)}<br>
+    Aggregate: ${aggVol.toFixed(2)} m³ × ₹${aggRate} = ₹${aggCost.toFixed(0)}<br>
+    Labour: ₹${labour}<br>
+    <hr style="border-color:#334155; margin:10px 0;">
+    <h3 style="color:#facc15;">Total Rate: ₹${totalCost.toFixed(0)} per m³</h3>
+  `;
+  addToBOQ("M20 Concrete Rate", "1 m³", totalCost);
+setTimeout(()=>{
+  document.getElementById("rate").scrollIntoView({behavior: 'smooth ', block: 'start'});
+}, 50);
+}
+
+
+function addToBOQ(item, qty, cost){
+ let index = boqData.findIndex(x => x.item === item);
+
+if(index >= 0){
+  boqData[index] = {item, qty, cost};
+}else{
+  boqData.push({item, qty, cost});
+}
+  updateBOQTable();
+}
+
+function updateBOQTable(){
+  let total = 0;
+  let html = `<table><tr><th>Item</th><th>Quantity</th><th>Cost (₹)</th></tr>`;
+  boqData.forEach(row => {
+    total += parseFloat(row.cost) || 0;
+    html += `<tr><td>${row.item}</td><td>${row.qty}</td><td>${parseFloat(row.cost).toLocaleString('en-IN')}</td></tr>`;
+  });
+  html += `<tr><th>Total</th><th></th><th>₹${total.toLocaleString('en-IN')}</th></tr></table>`;
+  document.getElementById("boqTable").innerHTML = html;
+}
+
+function printReport(){
+  window.print();
+}
+
+function exportExcel(){
+  let csv = "Item,Quantity,Cost\n";
+  let total = 0;
+  boqData.forEach(row => {
+    total += parseFloat(row.cost) || 0;
+    csv += `"${row.item}","${row.qty}","${row.cost}"\n`;
+  });
+  csv += `"Total","","${total}"`;
+  let blob = new Blob([csv], {type: 'text/csv'});
+  let url = window.URL.createObjectURL(blob);
+  let a = document.createElement("a");
+  a.href = url;
+  a.download = "BOQ_Report.csv";
+  a.click();
+}
+
+function exportPDF(){
+  const { jsPDF } = window.jspdf;
+  let doc = new jsPDF();
+  doc.setFontSize(16);
+  doc.text("Contech Infrastructure - BOQ Report", 14, 15);
+  doc.setFontSize(10);
+  doc.text("Date: " + new Date().toLocaleDateString('en-IN'), 14, 22);
+  let tableData = boqData.map(row => [row.item, row.qty, "₹" + parseFloat(row.cost).toLocaleString('en-IN')]);
+  let total = boqData.reduce((sum, row) => sum + (parseFloat(row.cost) || 0), 0);
+  doc.autoTable({
+    head: [['Item', 'Quantity', 'Cost']],
+    body: tableData,
+    startY: 30,
+    theme: 'grid',
+    headStyles: { fillColor: [30, 41, 59] },
+    foot: [['Total', '', '₹' + total.toLocaleString('en-IN')]],
+    footStyles: { fillColor: [30, 41, 59], fontStyle: 'bold' }
+  });
+  doc.save("BOQ_Report.pdf");
+}
+function clearSection(sectionId, resultId, defaultValue = "Result yahan dikhega") {
+
+  document.querySelectorAll(`#${sectionId} input`).forEach(input => {
+    input.value = "";
+  });
+
+  document.querySelectorAll(`#${sectionId} select`).forEach(select => {
+    select.selectedIndex = 0;
+  });
+
+  const result = document.getElementById(resultId);
+
+  if(result){
+    if(result.tagName === "SPAN"){
+      result.innerText = "0";
+    }else{
+      result.innerHTML = defaultValue;
+    }
+  }
+}
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js")
+    .then(() => console.log("PWA Ready"))
+    .catch(err => console.log(err));
+}
+</script>
+</body>
+</html>
+
+
+    
+
+ 
