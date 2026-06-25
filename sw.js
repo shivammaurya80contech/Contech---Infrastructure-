@@ -1,14 +1,14 @@
-const CACHE_NAME = "contech-v2";
+const CACHE_NAME = "contech-v3";
+
 
 const urlsToCache = [
-  "./",
-  "./index.html",
-  "./manifest.json",
-  "./icon-192.png",
-  "./icon-512.png",
-  "./Shivam.jpg",
-  "./building.jpg"
+  "/shivammaurya80contech/",
+  "/shivammaurya80contech/index.html",
+  "/shivammaurya80contech/manifest.json",
+  "/shivammaurya80contech/icon-192.png",
+  "/shivammaurya80contech/icon-512.png"
 ];
+
 
 self.addEventListener("install", event => {
   event.waitUntil(
@@ -23,3 +23,4 @@ self.addEventListener("fetch", event => {
       .then(response => response || fetch(event.request))
   );
 });
+
